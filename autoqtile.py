@@ -35,13 +35,13 @@ def hello():
     username = input("Introduce your system username: ")    
 
 def basic_packages():
-    os.system("sudo pacman -S install xorg lightdm lightdm-gtk-greeter qtile base-devel git")
+    os.system("sudo pacman -S install xorg lightdm lightdm-gtk-greeter qtile base-devel")
 
 def yay():
     global username
     os.system("sudo git clone sudo git clone https://aur.archlinux.org/yay.git /opt/yay")
     os.system("sudo chown {} /opt/yay".format(username))
-    os.system("sudo makepkg -si /opt/yay") ##REVIEW!!!!!
+    os.system("makepkg -si /opt/yay") ##REVIEW!!!!!
 
 def extra_software():
     #Audio
