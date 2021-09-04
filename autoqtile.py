@@ -42,9 +42,9 @@ def yay():
     os.system("sudo mkdir /opt/yay")
     os.system("sudo git clone https://aur.archlinux.org/yay.git /opt/yay")
     os.system("sudo chown {} /opt/yay".format(username))
-    os.system("cd /opt/yay")
-    os.system("makepkg -si") ##REVIEW!!!!!
-    os.system("cd ~/")
+    os.system("cd /opt/yay && makepkg -si && cd ~/")
+    #os.system("makepkg -si") ##REVIEW!!!!!
+    #os.system("cd ~/")
 
 def extra_software():
     #Audio
