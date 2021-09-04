@@ -1,2 +1,2 @@
-# autoqtile
+# AutoQtile
 Work in progress!!!
