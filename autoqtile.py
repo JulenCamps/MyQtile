@@ -13,7 +13,7 @@ print(
 """
 )
 
-extra_software = [
+software = [
 "firefox", #Browser 
 "alacritty", #Terminal
 "picom", #Compositor
@@ -39,6 +39,7 @@ def basic_packages():
 
 def yay():
     global username
+    os.system("sudo mkdir /opt/yay")
     os.system("sudo git clone https://aur.archlinux.org/yay.git /opt")
     os.system("sudo chown {} /opt/yay".format(username))
     os.system("makepkg -si /opt/yay") ##REVIEW!!!!!
