@@ -40,7 +40,7 @@ def hello():
     username = input("Introduce your system username: ")    
 
 def basic_packages():
-    os.system("sudo pacman --noconfirm -S install xorg lightdm lightdm-gtk-greeter qtile base-devel | 1>/dev/null")
+    os.system("sudo pacman --noconfirm -S xorg lightdm lightdm-gtk-greeter qtile base-devel | 1>/dev/null")
 
 def yay():
     global username
