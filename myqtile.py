@@ -26,6 +26,7 @@ software = [
 "vlc", #Video player
 ]
 
+
 def hello():
     global username
     #Detect if the user is running the script as root
@@ -66,7 +67,12 @@ def fonts():
 
 def config():
     global username
+    #Clone config_files in "$HOME"
     os.system("git clone https://github.com/julencamps/config_files ~/")
+
+    #Create needed directories
+    os.system("mkdir -p ~/.config")
+
     #Qtile
     os.system("cp -r ~/config_files/.config/qtile ~/.config")
     os.system("chmod {}+x ~/.config/qtile/autostart.sh".format(username))
