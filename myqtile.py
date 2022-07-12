@@ -64,7 +64,7 @@ def extra_software():
         os.system("sudo pacman --noconfirm -S {} | 1>/dev/null".format(i))
 
 def fonts():
-    os.system("yay --noconfirm -S nerd-fonts-ubuntu-mono | 1>/dev/null")
+    os.system("yay --noconfirm -S nerd-fonts-ubuntu-mono")
 
 def config():
     global username
@@ -88,10 +88,28 @@ def config():
     #Lightdm
     os.system("sudo systemctl enable lightdm")
 
+def nvidia():
+    nvidia = input("Do you want to install the nvidia propietary drivers?[y/N]")
+
+    if nvidia == "Y" or nvidia == "y":
+        os.system("sudo pacman --noconfirm -S nvidia| 1>/dev/null")
+        
+        optimus = input("Do you want to install optimus-manager?[y/N]")
+
+        if optimus == "Y" or optimus == "y":
+            os.system("yay --noconfirm -S optimus-manager optimus-manager-qt")
+        else:
+            pass
+
+    else:
+        pass
+
+
+
 def reboot():
     reboot = input("Do you want to reboot the system now?[Y/n]")
 
-    if reboot == Y or reboot == y:
+    if reboot == "Y" or reboot == "y" or reboot == "":
         os.system("reboot")
     else:
         pass
@@ -103,6 +121,7 @@ def main():
     extra_software()
     fonts()
     config()
+    nvidia()
     reboot()
 
 main()
