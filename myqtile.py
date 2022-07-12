@@ -44,10 +44,11 @@ def basic_packages():
 
 def yay():
     global username
+    os.system("sudo pacman --noconfirm -S go | 1>/dev/null")
     os.system("sudo mkdir /opt/yay")
     os.system("sudo git clone https://aur.archlinux.org/yay.git /opt/yay")
     os.system("sudo chown {} /opt/yay".format(username))
-    os.system("cd /opt/yay && makepkg -si && cd")
+    os.system("cd /opt/yay && makepkg -si --noconfirm && cd")
 
 def extra_software():
     #Audio
@@ -68,9 +69,7 @@ def fonts():
 def config():
     global username
     #Clone config_files in "$HOME"
-    print("HERE")
-    os.system("git clone https://github.com/JulenCamps/config_files.git ~/config_files")
-    print("HERE")
+    os.system("git clone https://github.com/JulenCamps/config_files.git ~/config_files | 1>/dev/null")
     #Create needed directories
     os.system("mkdir -p ~/.config")
 
