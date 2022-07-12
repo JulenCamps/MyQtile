@@ -63,7 +63,7 @@ def extra_software():
         os.system("sudo pacman --noconfirm -S {} | 1>/dev/null".format(i))
 
 def fonts():
-    os.system("yay -S ubuntu-mono-nerd-fonts")
+    os.system("yay --noconfirm -S ubuntu-mono-nerd-fonts")
 
 def config():
     global username
@@ -75,15 +75,15 @@ def config():
 
     #Qtile
     os.system("cp -r ~/config_files/.config/qtile ~/.config")
-    os.system("chmod {}+x ~/.config/qtile/autostart.sh".format(username))
-    os.system("sudo pacman -S python-psutil")
+    os.system("chmod {} +x ~/.config/qtile/autostart.sh".format(username))
+    os.system("sudo pacman --noconfirm -S python-psutil")
     
     #Alacritty
     os.system("cp -r ~/config_files/.config/alacritty ~/.config")
 
     #Autostart
     os.system("cp ~/config_files/.xsession ~/")
-    os.system("sudo chown +x ~/.xsession")
+    os.system("sudo chmod +x ~/.xsession")
 
     #Lightdm
     os.system("sudo systemctl enable lightdm")
