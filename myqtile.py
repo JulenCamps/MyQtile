@@ -36,7 +36,7 @@ def hello():
         print("Warning: Do not run this script as root user. It is dangerous!")
         quit()
 
-    os.system("sudo pacman -Syu")
+    os.system("sudo pacman -Syu | 1>/dev/null")
     username = os.getlogin()    
 
 def basic_packages():
@@ -63,20 +63,21 @@ def extra_software():
         os.system("sudo pacman --noconfirm -S {} | 1>/dev/null".format(i))
 
 def fonts():
-    os.system("yay --noconfirm -S ubuntu-mono-nerd-fonts")
+    os.system("yay --noconfirm -S ubuntu-mono-nerd-fonts | 1>/dev/null")
 
 def config():
     global username
     #Clone config_files in "$HOME"
+    print("HERE")
     os.system("git clone https://github.com/JulenCamps/config_files.git ~/")
-
+    print("HERE")
     #Create needed directories
     os.system("mkdir -p ~/.config")
 
     #Qtile
     os.system("cp -r ~/config_files/.config/qtile ~/.config")
     os.system("chmod {} +x ~/.config/qtile/autostart.sh".format(username))
-    os.system("sudo pacman --noconfirm -S python-psutil")
+    os.system("sudo pacman --noconfirm -S python-psutil | 1>/dev/null")
     
     #Alacritty
     os.system("cp -r ~/config_files/.config/alacritty ~/.config")
