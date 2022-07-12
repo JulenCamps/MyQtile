@@ -69,7 +69,7 @@ def config():
     global username
     #Clone config_files in "$HOME"
     print("HERE")
-    os.system("git clone https://github.com/JulenCamps/config_files.git ~/")
+    os.system("git clone https://github.com/JulenCamps/config_files.git ~/config_files")
     print("HERE")
     #Create needed directories
     os.system("mkdir -p ~/.config")
