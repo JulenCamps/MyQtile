@@ -24,6 +24,7 @@ software = [
 "libreoffice-fresh", #Office suit
 "nemo", #File manager 
 "vlc", #Video player
+"rofi", #Program Launcher
 ]
 
 
@@ -40,10 +41,12 @@ def hello():
     username = os.getlogin()    
 
 def basic_packages():
-    os.system("sudo pacman --noconfirm -S xorg lightdm lightdm-gtk-greeter qtile base-devel | 1>/dev/null")
+    print("[+]Installing basic packages...")
+    os.system("sudo pacman --noconfirm -S xorg lightdm lightdm-gtk-greeter qtile base-devel brightnessctl | 1>/dev/null")
 
 def yay():
     global username
+    print("[+]Installing yay aur helper...")
     os.system("sudo pacman --noconfirm -S go | 1>/dev/null")
     os.system("sudo mkdir /opt/yay")
     os.system("sudo git clone https://aur.archlinux.org/yay.git /opt/yay")
@@ -51,6 +54,7 @@ def yay():
     os.system("cd /opt/yay && makepkg -si --noconfirm && cd")
 
 def extra_software():
+    print("[+]Installing extra software...")
     #Audio
     os.system("sudo pacman --noconfirm -S pulseaudio pavucontrol | 1>/dev/null")
 
@@ -64,9 +68,11 @@ def extra_software():
         os.system("sudo pacman --noconfirm -S {} | 1>/dev/null".format(i))
 
 def fonts():
+    print("[+]Downloading fonts...")
     os.system("yay --noconfirm -S nerd-fonts-ubuntu-mono")
 
 def config():
+    print("[+]Configuring the system...")
     global username
     #Clone config_files in "$HOME"
     os.system("git clone https://github.com/JulenCamps/config_files.git ~/config_files | 1>/dev/null")
@@ -88,15 +94,20 @@ def config():
     #Lightdm
     os.system("sudo systemctl enable lightdm")
 
+    #Rofi 
+    os.system("sudo cp -r ~/config_files/.config/rofi ~/.config")
+
 def nvidia():
     nvidia = input("Do you want to install the nvidia propietary drivers?[y/N]")
 
     if nvidia == "Y" or nvidia == "y":
+        print("[+]Installing the nvidia propietary driver...")
         os.system("sudo pacman --noconfirm -S nvidia| 1>/dev/null")
         
         optimus = input("Do you want to install optimus-manager?[y/N]")
 
         if optimus == "Y" or optimus == "y":
+            print("[+]Installing optimus manager...")
             os.system("yay --noconfirm -S optimus-manager optimus-manager-qt")
         else:
             pass
