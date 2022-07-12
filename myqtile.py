@@ -68,7 +68,7 @@ def fonts():
 def config():
     global username
     #Clone config_files in "$HOME"
-    os.system("git clone https://github.com/julencamps/config_files ~/")
+    os.system("git clone https://github.com/JulenCamps/config_files.git ~/")
 
     #Create needed directories
     os.system("mkdir -p ~/.config")
