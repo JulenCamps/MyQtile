@@ -37,7 +37,7 @@ def hello():
         quit()
 
     os.system("sudo pacman -Syu")
-    username = input("Introduce your system username: ")    
+    username = os.getlogin()    
 
 def basic_packages():
     os.system("sudo pacman --noconfirm -S xorg lightdm lightdm-gtk-greeter qtile base-devel | 1>/dev/null")
