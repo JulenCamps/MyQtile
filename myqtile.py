@@ -64,7 +64,7 @@ def extra_software():
         os.system("sudo pacman --noconfirm -S {} | 1>/dev/null".format(i))
 
 def fonts():
-    os.system("yay --noconfirm -S ubuntu-mono-nerd-fonts | 1>/dev/null")
+    os.system("yay --noconfirm -S nerd-fonts-ubuntu-mono | 1>/dev/null")
 
 def config():
     global username
@@ -88,6 +88,13 @@ def config():
     #Lightdm
     os.system("sudo systemctl enable lightdm")
 
+def reboot():
+    reboot = input("Do you want to reboot the system now?[Y/n]")
+
+    if reboot == Y or reboot == y:
+        os.system("reboot")
+    else:
+        pass
 
 def main():
     hello() 
@@ -96,5 +103,6 @@ def main():
     extra_software()
     fonts()
     config()
+    reboot()
 
 main()
