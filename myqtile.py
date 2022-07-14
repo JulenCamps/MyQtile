@@ -30,11 +30,12 @@ software = [
 
 def hello():
     global username
+    
     #Detect if the user is running the script as root
     uid = os.getuid()
 
     if uid == 0:
-        print("Warning: Do not run this script as root user. It is dangerous!")
+        print("Warning: Do not run this script as root. It is dangerous!")
         quit()
 
     os.system("sudo pacman -Syu | 1>/dev/null")
@@ -44,14 +45,13 @@ def basic_packages():
     print("[+]Installing basic packages...")
     os.system("sudo pacman --noconfirm -S xorg lightdm lightdm-gtk-greeter qtile base-devel brightnessctl | 1>/dev/null")
 
-def yay():
+def paru():
     global username
-    print("[+]Installing yay aur helper...")
-    os.system("sudo pacman --noconfirm -S go | 1>/dev/null")
-    os.system("sudo mkdir /opt/yay")
-    os.system("sudo git clone https://aur.archlinux.org/yay.git /opt/yay")
-    os.system("sudo chown {} /opt/yay".format(username))
-    os.system("cd /opt/yay && makepkg -si --noconfirm && cd")
+    print("[+]Installing paru AUR helper...")
+    os.system("sudo pacman --noconfirm -S rust | 1>/dev/null")
+    os.system("sudo git clone https://aur.archlinux.org/paru.git /opt/paru")
+    os.system("sudo chown {} /opt/paru".format(username))
+    os.system("cd /opt/paru && makepkg -si --noconfirm && cd")
 
 def extra_software():
     print("[+]Installing extra software...")
@@ -69,11 +69,13 @@ def extra_software():
 
 def fonts():
     print("[+]Downloading fonts...")
-    os.system("yay --noconfirm -S nerd-fonts-ubuntu-mono")
+    os.system("paru --noconfirm nerd-fonts-ubuntu-mono")
 
 def config():
-    print("[+]Configuring the system...")
     global username
+
+    print("[+]Configuring the system...")
+    
     #Clone config_files in "$HOME"
     os.system("git clone https://github.com/JulenCamps/config_files.git ~/config_files | 1>/dev/null")
     #Create needed directories
@@ -97,18 +99,23 @@ def config():
     #Rofi 
     os.system("sudo cp -r ~/config_files/.config/rofi ~/.config")
 
+    #zsh
+    os.system("sudo pacman --noconfirm -S zsh | 1>/dev/null")
+    os.system("sudo chsh -s /usr/bin/zsh {}".format(username))
+    os.system("sudo cp ~/config_files/.zshrc ~/")
+
 def nvidia():
     nvidia = input("Do you want to install the nvidia propietary drivers?[y/N]")
 
     if nvidia == "Y" or nvidia == "y":
         print("[+]Installing the nvidia propietary driver...")
-        os.system("sudo pacman --noconfirm -S nvidia| 1>/dev/null")
+        os.system("sudo pacman --noconfirm -S nvidia | 1>/dev/null")
         
         optimus = input("Do you want to install optimus-manager?[y/N]")
 
         if optimus == "Y" or optimus == "y":
             print("[+]Installing optimus manager...")
-            os.system("yay --noconfirm -S optimus-manager optimus-manager-qt")
+            os.system("paru --noconfirm optimus-manager optimus-manager-qt")
         else:
             pass
 
@@ -128,7 +135,7 @@ def reboot():
 def main():
     hello() 
     basic_packages()
-    yay()
+    paru()
     extra_software()
     fonts()
     config()
