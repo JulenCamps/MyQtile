@@ -33,13 +33,16 @@ def hello():
     
     #Detect if the user is running the script as root
     uid = os.getuid()
+    username = os.getlogin()
 
     if uid == 0:
         print("Warning: Do not run this script as root. It is dangerous!")
         quit()
+    else:
+        pass
 
-    os.system("sudo pacman -Syu | 1>/dev/null")
-    username = os.getlogin()    
+    os.system("sudo pacman --noconfirm -Syu | 1>/dev/null")
+        
 
 def basic_packages():
     print("[+]Installing basic packages...")
