@@ -1,10 +1,10 @@
 #! /bin/python3
 #JulenCamps
 #https://github.com/julencamps/myqtile
-#I'm not a professional programmer so don't expect support for
-#this script. You are running it UNDER YOUR OWN RESPONSABILITY.
 
 import os
+
+from sofware.software import essential, extra, aur
 
 print(
 """              
@@ -16,16 +16,6 @@ print(
           |___/    
 """
 )
-
-software = [
-"firefox", #Browser 
-"alacritty", #Terminal
-"picom", #Compositor
-"libreoffice-fresh", #Office suit
-"nemo", #File manager 
-"vlc", #Video player
-"rofi", #Program Launcher
-]
 
 
 def hello():
@@ -41,38 +31,30 @@ def hello():
     else:
         pass
 
+    #Update the system
     os.system("sudo pacman --noconfirm -Syu | 1>/dev/null")
         
 
-def basic_packages():
-    print("[+]Installing basic packages...")
-    os.system("sudo pacman --noconfirm -S xorg lightdm lightdm-gtk-greeter qtile base-devel brightnessctl | 1>/dev/null")
+def software_installation():
+    print("[+]Installing all the necessary software...")
+    
+    for i in essential:
+        os.system("sudo pacman --noconfirm -S {} > /dev/null 2>&1".format(i))
+
+    for i in extra:
+        os.system("sudo pacman --noconfirm -S {} > /dev/null 2>&1".format(i))
+
+    for i in aur:
+        os.system("paru --noconfirm -S {} > /dev/null 2>&1".format(i))
 
 def paru():
     global username
-    print("[+]Installing paru AUR helper...")
+    print("[+]Compiling paru AUR helper...")
     os.system("sudo pacman --noconfirm -S rust | 1>/dev/null")
     os.system("sudo git clone https://aur.archlinux.org/paru.git /opt/paru")
     os.system("sudo chown {} /opt/paru".format(username))
     os.system("cd /opt/paru && makepkg -si --noconfirm && cd")
 
-def extra_software():
-    print("[+]Installing extra software...")
-    #Audio
-    os.system("sudo pacman --noconfirm -S pulseaudio pavucontrol | 1>/dev/null")
-
-    #Systray applets
-    os.system("sudo pacman --noconfirm -S volumeicon cbatticon network-manager-applet udiskie | 1>/dev/null")
-
-    #Wallpaper
-    os.system("sudo pacman --noconfirm -S feh | 1>/dev/null")
-    
-    for i in software:
-        os.system("sudo pacman --noconfirm -S {} | 1>/dev/null".format(i))
-
-def fonts():
-    print("[+]Downloading fonts...")
-    os.system("paru --noconfirm nerd-fonts-ubuntu-mono")
 
 def config():
     global username
@@ -87,7 +69,6 @@ def config():
     #Qtile
     os.system("cp -r ~/config_files/.config/qtile ~/.config")
     os.system("chmod {} +x ~/.config/qtile/autostart.sh".format(username))
-    os.system("sudo pacman --noconfirm -S python-psutil | 1>/dev/null")
     
     #Alacritty
     os.system("cp -r ~/config_files/.config/alacritty ~/.config")
@@ -103,9 +84,9 @@ def config():
     os.system("sudo cp -r ~/config_files/.config/rofi ~/.config")
 
     #zsh
-    os.system("sudo pacman --noconfirm -S zsh | 1>/dev/null")
     os.system("sudo chsh -s /usr/bin/zsh {}".format(username))
     os.system("sudo cp ~/config_files/.zshrc ~/")
+
 
 def nvidia():
     nvidia = input("Do you want to install the nvidia propietary drivers?[y/N]")
@@ -126,7 +107,6 @@ def nvidia():
         pass
 
 
-
 def reboot():
     reboot = input("Do you want to reboot the system now?[Y/n]")
 
@@ -135,14 +115,14 @@ def reboot():
     else:
         pass
 
+
 def main():
     hello() 
-    basic_packages()
+    software_installation()
     paru()
-    extra_software()
-    fonts()
-    config()
     nvidia()
+    config()
     reboot()
+
 
 main()
